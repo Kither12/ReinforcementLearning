@@ -79,6 +79,16 @@ from mpl_toolkits import mplot3d
 # plt.savefig("MSE_vs_Lambda01")
 # plt.show()
 
+#train TD(0.5)
+# max_epoches = 1000000
+
+# value = np.zeros((2, 22, 11))
+# counter = np.zeros((2, 22, 11))
+# for i in range(max_epoches) :
+# 	value, counter = SARSA(value, counter, 0.5, 100)
+
+# np.save("SARSA-0.5.npy",value)
+
 
 monte_value = np.load("montecarlo.npy")
 rewards = 0
@@ -86,6 +96,16 @@ for i in range(1000000):
 	env = Easy21Env()
 	while not env.terminate:
 		action = np.argmax(monte_value[:, env.player.points, env.dealer.points])
+		reward = env.step(action)
+		rewards += reward
+print(rewards)
+
+sarsa_value = np.load("SARSA-0.5.npy")
+rewards = 0
+for i in range(1000000):
+	env = Easy21Env()
+	while not env.terminate:
+		action = np.argmax(sarsa_value[:, env.player.points, env.dealer.points])
 		reward = env.step(action)
 		rewards += reward
 print(rewards)
