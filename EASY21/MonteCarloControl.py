@@ -16,7 +16,6 @@ def MonteCarlo(value, counter, N_zero) :
 		counter[action, env.player.points, env.dealer.points] += 1
 		temp = env.step(action)
 		reward += temp
-		print(temp)
 
 	for (action, player_points, dealer_points) in trace :
 		value[action, player_points, dealer_points] += 1 / counter[action, player_points, dealer_points] * (reward - value[action, player_points, dealer_points])
